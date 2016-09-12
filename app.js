@@ -1,6 +1,4 @@
 // 'importa' o express e o instancia.
-var Chart = require('chart.js');
-var myChart =  Chart({...});
 
 var express = require('express');
 var app = express();
