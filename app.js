@@ -1,34 +1,31 @@
-// 'importa' o express e o instancia.
-
-var express = require('express');
-var app = express();
-
-//importa module de connection mysql
-//var greet = require('./models/mysqlmodule');
 /*
-var misc = require('./misc');
-console.log("Adding %d to 10 gives us %d", misc.x, misc.addX(10));
+	SISTEMA ESCOLAR
 */
-var port = process.env.PORT || 3000;
+var express			=	require('express');					// 'importa' o express e o instancia.
+var app 			=	express();
+var morgan			=	require('morgan');					// log requests to the console (express4)
+var bodyParser		=	require('body-parser');				// pull information from HTML POST (express4)
+var methodOverride	=	require('method-override');			// simulate DELETE and PUT (express4)
 
-app.set('view engine', 'ejs'); // configura a engine view
+var conn			=	require('./models/mysqlmodule');	//importa module de connection mysql
+conn.connection;											//Conecta no banco
+
+var port 			=	process.env.PORT || 3000;
+
+/*CONFIGS*/
+app.set('view engine', 'ejs');								// configura a engine view
 app.use('/assets', express.static(__dirname + '/public'));
 
-//route 'rota' para quando a index for acessada
 
-require('./routes')(app); 	//Referença pro routes.js
+require('./routes')(app);									//Referença pro routes.js
+
+
+app.listen(port);											//ABRE SERVIDOR	
+
+
  /*
-app.get('/', function (req, res) {
-	res.render('paginas/index');
-});
 
 app.get('/teste', function (req,res){
 	res.send("funcionou")
 
 }); */
-
-app.listen(port);
-
-
-// Failed to lookup view "paginas/Inx"ês
-// in views directory "/home/yurr/sistEscolar/tcc_sistescolar/views"

@@ -1,10 +1,10 @@
 //Module with functions to control BD
 var mysql       = require('mysql');
 var connection  = mysql.createConnection({
-    host        :'',
-    user        :'',
+    host        :'localhost',
+    user        :'root',
     password    :'',
-    database    :''
+    database    :'sge'
 });
 
 connection.connect(function(err){
@@ -14,8 +14,9 @@ connection.connect(function(err){
       console.log("Err0 ao se conectar... \n\n");
     }
 });
-//EXEMPLO DE CONECTOES
-connection.query('SELECT * from NOMEDATABELA', function(err, rows, fields){
+
+//Conexoes
+/*connection.query('SELECT * from NOMEDATABELA', function(err, rows, fields){
   if(!err)
     console.log(' ... : ', rows);
   else
@@ -38,3 +39,4 @@ connection.query('DELETE FROM posts WHERE title = "wrong"', function (err, resul
 })
 
 connection.end();
+*/
