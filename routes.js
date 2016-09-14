@@ -7,8 +7,8 @@ module.exports = function(app,passport) {
 			app.get('/index',HomeController.index);
 			app.get('/teste',isLogged,HomeController.teste);
 			app.get('/', HomeController.login);
-			console.log('oi');
-             app.post('/', passport.authenticate('local', {
+			
+            app.post('/', passport.authenticate('local', {
             successRedirect : '/index', // redirect to the secure profile section
             failureRedirect : '/', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
