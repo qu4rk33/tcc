@@ -6,7 +6,7 @@
 
 
 
-(function(angular) {
+/*(function(angular) {
   'use strict';
 angular.module('sistEscolar', ['angular-sortable-view'])
   .controller('Controller', ['$scope', function($scope) {
@@ -32,7 +32,7 @@ angular.module('sistEscolar', ['angular-sortable-view'])
 
 
 
-
+*/
 
 
 

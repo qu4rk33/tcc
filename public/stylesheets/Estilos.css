@@ -36,6 +36,8 @@ body,html {
 
 }
 .dropdown-menu{  text-align: right!important; }
+.dropdown-menu:nth-child(2){  text-align: left!important; }
+  
 /* SideMenu */
 
 .sidebar-nav li {
@@ -56,8 +58,9 @@ body,html {
   position: relative;
   height: 100vh;
   z-index: 999;
+  border-right: 1px solid #DCDCDC !important;
   background: #F7F7F7;
-  margin-top: 0vh;
+  margin-top: -2.3vh;
 }
 
 
@@ -125,8 +128,32 @@ body,html {
 
 
  
-
-.bloco {
+.bloco2:first-child{
+  margin-top: 5%;
+  margin-left: 3%;
+  display: inline-block;
+  vertical-align: top;
+  width: 80vh;
+  height: 300px;
+  border-radius: 05px;
+  border:1px solid #3B89C3;
+  padding: 20px;
+  margin-bottom: 50px;
+}
+.bloco2:nth-child(2){
+  margin-top: 5%;
+  margin-left: 4%;
+  display: inline-block;
+  vertical-align: top;
+  width: 40vh;
+  height: 300px;
+  border-radius: 05px;
+  border:1px solid #3B89C3;
+  background-color: #f2f3f1;
+  padding: 20px;
+  margin-bottom: 50px;
+}
+.bloco   {
   margin-top: 5%;
   margin-left: 2%;
   display: inline-block;
@@ -173,6 +200,10 @@ body,html {
 }
 .bloco:nth-child(5){
   background-color: #119436;
+
+}
+.bloco:nth-child(6){
+
 }
 .bloco h2 {
   font-size: 18px;
@@ -189,50 +220,14 @@ body,html {
 /*TopMenu*/
  
 
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-
 /*Bt de Pesquisar*/
 
 
 .search {
-        margin-top: 10px;
+        margin-top: 30px;
         padding: 0;
         margin-left: 10px;
-        padding-bottom: 20px;
+        padding-bottom: 25px;
     }
  
     .search{
@@ -248,7 +243,7 @@ body,html {
         margin-top: 0px;
         border: none!important;
         position: relative;
-        left: -23px;
+        left: -30px;
         /* IE7-8 doesn't have border-radius, so don't indent the padding */
         margin-bottom: 0;
         color:#3B89C3!important;
