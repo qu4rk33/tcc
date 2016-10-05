@@ -1,10 +1,10 @@
-<nav class="navbar navbar-default navbar-static-top">
+﻿<nav class="navbar navbar-default navbar-static-top">
     
-      <a class="navbar-brand" href="/">
+      <a class="navbar-brand" href="/index">
        <img alt="CP@2" src="http://3.bp.blogspot.com/-Vu_Eh3wGFFQ/VZExgiSzgrI/AAAAAAAACVw/kArVYwT5p6M/s1600/logo_cp2.png" height="44" width="55">
  </a>
- <a class="navbar-brand" href="/">
-  Colégio Pedro Segundo 
+ <a class="navbar-brand" href="/index">
+  Colégio Pedro II
  </a>
         
     
@@ -19,11 +19,14 @@
                <li><a href="#"> <button  class="btn btn-default"> <i class="glyphicon glyphicon-cog" aria-hidden="true"></i></button></a></li>
         <li class="dropdown">
           
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" > <p> Teste</p>  <i class="fa fa-user fa-2x"></i></a>
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" > 
+       <%= user %>
+
+            <i class="fa fa-user fa-2x"></i></a>
 
           <ul class="dropdown-menu">
             <li><a href="#">Perfil</a></li>            
-            <li><a href="#">Sair</a></li>
+            <li><a href="/logout">Sair</a></li>
           </ul>
     
   </div>

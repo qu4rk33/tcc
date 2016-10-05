@@ -1,0 +1,86 @@
+<html lang="pt">
+<head>
+    <% include ../partes/head %>
+</head>
+<body>
+    <div class="all">
+
+        <div class="topo row  ">
+                <% include ../partes/topmenu.ejs %>
+        </div>
+          <div class="row">
+              <div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2 fixed">
+                  <% include ../partes/sidemenu.ejs %>
+              </div>
+        <div class="container-fluid">
+
+          <div class="content col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
+            <H3>Cadastro de questões</H3>
+
+            <% if (message.length > 0) { %>
+                <div class="alert alert-info" style="text-align: center;"><%= message %></div>
+            <% } %>
+
+            <br>
+
+            <form class="form-inline" action="/cadastroQuest" method="post" name="cadastroQuestao">
+
+              <input type="text" name="autor" value="" placeholder="Autor" class="form-control" style="width:300px;" onblur="loadDisciplinas()">&nbsp&nbsp
+
+              <select class="form-control" name="visibilidade" style="width:300px;">
+                <option disabled selected>Visibilidade</option>
+                <option>Privada</option>
+                <option>Pública</option>
+              </select><br><br>
+
+              <select class="form-control" name="disciplina" onclick="campoPreenchido('cadastroQuestao', 'autor', 'Informe o autor da questão!')" style="width:300px;">
+                <option disabled selected>Disciplina</option>
+              </select>&nbsp&nbsp
+
+              <select class="form-control" name="materia" style="width:300px;" onclick="if(campoPreenchido('cadastroQuestao', 'autor', 'Informe o autor da questão!'))campoPreenchido('cadastroQuestao', 'disciplina', 'Informe a disciplina da questão!')">
+                <option disabled selected>Materia</option>
+              </select><br><br>
+
+              <select class="form-control" name="serie" style="width:300px;">
+                <option disabled selected>Série</option>
+                <option>1º ano</option>
+                <option>2º ano</option>
+                <option>3º ano</option>
+              </select>&nbsp&nbsp
+
+              <input type="text" name="criacao" value="" placeholder="Ano de criação" class="form-control" style="width:300px;"><br><br>
+
+              <select class="form-control" name="tipo" onchange="carregaCampos()" style="width:300px;">
+                <option disabled selected>Tipo</option>
+                <option>Discursiva</option>
+                <option>Objetiva</option>
+              </select>&nbsp&nbsp
+
+              <select class="form-control" name="nivel" style="width:300px;">
+                <option disabled selected>Nível</option>
+                <option>Básica</option>
+                <option>Mediana</option>
+                <option>Avançada</option>
+              </select><br><br>
+
+              <textarea name="name" rows="10" class="form-control" style="resize: none; width:610px;" placeholder="Enunciado"></textarea><br><br>
+
+              <div class="" id="dadosQuest" style="text-align:center; margin-left:0px;width:610px;">
+
+              </div>
+
+            </form>
+
+          </div>
+
+          <div class="footer">
+            <footer>
+                <% include ../partes/footer %>
+            </footer>
+          </div>
+      </div>
+
+    </div>
+</body>
+
+</html>
