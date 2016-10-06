@@ -13,6 +13,7 @@ module.exports = function(app,passport) {
             app.get('/cadastroProvas',isLogged, HomeController.cadastroProvas);
             app.get('/cadastroNotas',isLogged, HomeController.cadastroNotas);
             app.get('/diarioPresenca',isLogged, HomeController.diarioPresenca);
+            app.get('/calendario',isLogged, HomeController.calendario);
 
 
             app.post('/cadastro', passport.authenticate('cadastro', {

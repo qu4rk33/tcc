@@ -27,3 +27,7 @@ exports.cadastroNotas		=	function(request, response){
 exports.diarioPresenca		=	function(request, response){
     response.render('paginas/diarioPresenca',{  user: request.user.username     });
 };
+
+exports.calendario		=	function(request, response){
+    response.render('paginas/calendario',{  user: request.user.username     });
+};

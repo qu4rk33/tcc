@@ -1,19 +1,47 @@
-<html lang="pt">
+<html lang="pt" ng-app="sge">
 <head>
     <% include ../partes/head %>
 <script>
-$( function() {
-$( "#datepicker" ).datepicker({
-     yearRange: '1900:2050',
- changeMonth: true,
- changeYear: true,
- altFormat: "yy-dd-mm",
- altField: "#alt-date"
-});
-} );
+  $( function() {
+  $( "#datepicker" ).datepicker({
+       yearRange: '1900:2050',
+       changeMonth: true,
+       changeYear: true,
+       altFormat: "yy-dd-mm",
+       altField: "#alt-date"
+  });
+  } );
+
 </script>
+<!-- angular -->
+<script>
+  angular.module("sge",[]);
+  angular.module("sge").controller("sgeCtrl", function ($scope) {
+    $scope.app="olá mundo";
+
+      $scope.questl = [
+        {cod_quest:1, materia: "mat", enunciado:"41+1"},
+        {cod_quest:2, materia: "mat", enunciado:"4+1"},
+        {cod_quest:3, materia: "mat", enunciado:"1+1"},
+        {cod_quest:4, materia: "mat2", enunciado:"piR²"},
+        {cod_quest:5, materia: "mat", enunciado:"441+1"}
+			];
+
+    $scope.questps = [
+      {cod_quest:7, materia: "mat2", enunciado:"2piR"}
+    ];
+
+    $scope.addQToP = function (){
+        //$scope.questps.push(cod_quest, materia, enunciado);
+        //console.log(cod_quest,materia,enunciado);
+    };
+
+  });
+
+</script>
+
 </head>
-<body>
+<body ng-controller="sgeCtrl">
     <div class="all">
 
         <div class="topo row  ">
@@ -47,7 +75,7 @@ $( "#datepicker" ).datepicker({
 
                 <input type="text" name="nome" value="" placeholder="Nome da Prova" class="form-control" style="width:300px;"><br><br>
 
-  <!-----------><hr style="border: 0.3px solid #DDD; width:610px; margin-left:0px;"><!-------------------------------------------------------------------------------------------------------------->
+  <!-----------><hr style="border: 0.3px solid #DDD; width:610px; margin-left:0px;">
 
                 <H4>Questões</H4><br>
 
@@ -58,14 +86,21 @@ $( "#datepicker" ).datepicker({
                 <table class="table" style="width:610px;">
                   <thead class="thead-inverse">
                     <tr>
+                      <th>Matéria</th>
                       <th>Enunciado</th>
                       <th>Adicionar</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Cocô no morro rola ou não rola?</td>
-                      <td class="celulasCB"><input type="checkbox" name="name" value=""></td>
+                    <tr ng-repeat="quest in questl">
+                      <td ng-model="quest.materia">{{quest.materia}}</td>
+                      <td ng-model="quest.enunciado">{{quest.enunciado}}</td>
+                      <td width="10px"><button class="btn btn-primary btn-block" >Adicionar</button></td>
+
+
+
+                      <!--td>Cocô no morro rola ou não rola?</td>
+                      <td class="celulasCB"><input type="checkbox" name="name" value=""></td-->
                     </tr>
                   </tbody>
                 </table>
@@ -84,11 +119,11 @@ $( "#datepicker" ).datepicker({
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th class="celulasCB">1</th>
-                    <td class="celulasCB">Mark</td>
-                    <td>Otto</td>
-                    <td class="celulasCB"><input type="button" name="name" value="Remover" style="background-color:#F00"></td>
+                  <tr ng-repeat="questp in questps">
+                    <td>{{questps.indexOf(questp)}}</td>
+                    <td>{{questp.materia}}</td>
+                    <td>{{questp.enunciado}}</td>
+                    <td width="10px"><button class="btn btn-danger btn-block" ng-click="">Remover</button></td>
                   </tr>
                 </tbody>
               </table>
