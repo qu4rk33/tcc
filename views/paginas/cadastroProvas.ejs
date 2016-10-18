@@ -118,6 +118,7 @@ $(function(){
     alert(table.rows.length);
     for(var r = 1; r < table.rows.length; r++)
       dados[r] = table.rows[r].cells[1].innerHTML;
+  
     $.ajax({
           url: "/cadastroProva",  // AQUI É A URL QUE SERA ENVIADO
           type: "POST",   //TIPO DE ENVIO
@@ -230,21 +231,21 @@ var novaRow = [];
 
               <form class="form-inline"  method="post" action="" name="cadastroProvas">
 
-                <input type="text" disabled id="autor" value=<%= user %> placeholder="Autor" class="form-control" style="width:300px;" required>&nbsp&nbsp
+                <input type="text" disabled id="autor" value=<%= user %> placeholder="Autor" class="form-control" style="width:300px;">&nbsp&nbsp
 
-                <select class="form-control" id="disciplina" style="width:300px;" required>
+                <select class="form-control" id="disciplina" style="width:300px;">
                   <option disabled selected>Disciplina</option>
 
                 </select><br><br>
 
-                <select class="form-control" id="serie" style="width:300px;" required>
+                <select class="form-control" id="serie" style="width:300px;">
                   <option disabled selected>Série</option>
                   <option>1º ano</option>
                   <option>2º ano</option>
                   <option>3º ano</option>
                 </select>&nbsp&nbsp
 
-                <select class="form-control" id="tipo" style="width:300px;" required>
+                <select class="form-control" id="tipo" style="width:300px;">
                   <option disabled selected>Tipo</option>
                   <option>Prova</option>
                   <option>Teste</option>

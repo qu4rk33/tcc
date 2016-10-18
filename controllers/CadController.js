@@ -9,7 +9,7 @@ exports.pesquisaDisc = function(req, res){
     var disciplinas = [];
     connDB.query("select * from disciplinas ",function(err,rows){
       if (err)
-      request.flash('MSGCadQuest', err);
+      req.flash('MSGCadQuest', err);
       if (rows.length) {
 
                for (var i = 0, len = rows.length; i < len; i++) {
@@ -74,22 +74,38 @@ exports.pesquisaQuest = function(request, response){
 
 exports.cadastroProva		=	function(request, response, next){
   var dados = request.body.dados;
-  var qry= "";
+  var qry= "INSERT INTO `provas`(`matricula`, `cod_disciplina`, `anoserie`, `tipo_avaliacao`)  SELECT `matricula`,`disciplina_id` , '"+ request.body.serie +"','"+ request.body.tipo +"' FROM `profs`,`disciplinas` WHERE nome = '"+ request.body.autor +"' AND  disciplina_nome = '"+ request.body.disciplina +"'  " ;
+  var confirm= 0;
   console.log(qry);
   connDB.query(qry,function(err,rows){
     if (err)
       console.log("erro ao inserir la na prova");
-      for(x=1; x<=dados.length; x++){
-        console.log(dados[x]);
 
-        connDB.query("INSERT INTO `prova_questoes` VALUES ((SELECT LAST(cod_prova) FROM provas),(SELECT `cod_quest` FROM `questoes` WHERE enunciado = '"+ dados[x] +"' ))",function(err,rows){
-            if (err)
-            request.flash('MSGCadQuest', err);
 
-          });
-      }
+    confirm=1;
+      console.log(confirm);
 
 });
+if(confirm !=1){
+  console.log(confirm ==1);
+  console.log("aqui");
+
+  for(x=1; x<dados.length; x++){
+    console.log("aqui");
+    var qry2= "INSERT INTO `prova_questoes` SELECT provas.cod_prova, questoes.cod_quest FROM provas, questoes WHERE questoes.enunciado = '"+ request.body.dados[x] +"' ";
+    console.log(qry2);
+    connDB.query(qry2,function(err,rows){
+      if(err){
+  console.log('Error connecting to Db');
+  return;
+  }
+  console.log('Connection established');
+
+
+      });
+  }
+
+}
 
 };
 

@@ -30,69 +30,13 @@
     </style>
 
 
-    <!--script>
-      angular.module('mwl.calendar.docs', ['mwl.calendar', 'ngAnimate', 'ui.bootstrap', 'colorpicker.module']);
-      angular
-        .module('mwl.calendar.docs')
-        .controller('sgeCtrl', function(moment, calendarConfig) {
-      
-          var vm = this;
-      
-          vm.events = [
-            
-            {
-            title: 'My event title', 
-            startsAt: new Date(2016,9,18,4),             
-            
-            },
-            {
-              title: 'No event end date',
-              startsAt:new Date(2016,9,17,5), //ano, mes(0 a 11), dia, hora(24)
-              color: calendarConfig.colorTypes.info
-            }, 
-            {
-              title: 'No event end date',
-              startsAt: moment().hours(5).minutes(0),
-              color: calendarConfig.colorTypes.warning
-            }
-          ];
-      
-          vm.calendarView = 'month'; //o mode de apresentação  
-          vm.viewDate = new Date(); //evoca a data atual 
+    <script>
+      $( function() {
 
 
-          $scope.addEvento = function(){
-            
-          }
+      });      
       
-        });
-   
-
-      /*
-      angular
-        .module('mwl.calendar.docs')
-        .factory('alert', function($uibModal) {
-      
-          function show(action, event) {
-            return $uibModal.open({
-              templateUrl: 'modalContent.html',
-              controller: function() {
-                var vm = this;
-                vm.action = action;
-                vm.event = event;
-              },
-              controllerAs: 'vm'
-            });
-          }
-      
-          return {
-            show: show
-          };
-      
-        });*/
-
-      
-    </script-->
+    </script>
 
 </head>
 <body ng-controller="sgeCtrl as vm">
@@ -109,7 +53,7 @@
         
               <div class="content col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
                 
-              {{vm.events}}
+              
               <div class="calendar">
   
                 <br>
@@ -174,15 +118,32 @@
                       <input type="text" class="form-control" ng-model="addEvento.title" placeholder="Ex: Feira de livro">
                     </div>
                     <div class="form-group form-inline">
-                      <label for="data">Data:</label> <input type="datetime-local" ng-model="addEvento.startsAt" class="form-control">
-                      <!--label for="hora">Hora:</label> <input type="time" ng-model="addEvento.hora" class="form-control"-->
+                      <label for="data">Data:</label> <input type="datetime-local" id="datepicker" ng-model="addEvento.startsAt" class="form-control">
+                      
+                      <label for="hora">cor:</label>
+                      <select ng-model="addEvento.color.primary">
+                        <option style="background-color:BlueViolet" >BlueViolet </option>
+                        <option style="background-color:BurlyWood" >BurlyWood  </option>
+                        <option style="background-color:CadetBlue" >CadetBlue  </option>
+                      </select>
+
+                      <label for="hora">cor:</label>
+                      <select ng-model="addEvento.color.secondary">
+                        <option style="background-color:DarkKhaki">DarkKhaki  </option>
+                        <option style="background-color:DarkOrange">DarkOrange   </option>
+                        <option style="background-color:DarkSeaGreen">DarkSeaGreen  </option>
+                      </select>
+                      <!--label for="hora">cor:</label> <input type="color" ng-model="addEvento.color.primary" class=" ">
+                      <label for="hora">cor 2:</label> <input type="color" ng-model="addEvento.color.secondary" class=" "-->
                     </div>
 
                     <button type="submit" class="btn btn-default" ng-click="addEventoCalendario(addEvento)">Cadastrar</button>
                   </form>
                 </div>
               </div>       
-
+              {{evento}}
+              <br><br>
+              {{vm.events}}
               </div>
       </div>
 

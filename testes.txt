@@ -1,19 +1,12 @@
+INSERT INTO `provas`(`matricula`, `cod_disciplina`, `anoserie`, `tipo_avaliacao`)
+ SELECT `matricula`,`disciplina_id` , '"+ request.body.serie +"','"+ request.body.tipo +"'
+  FROM `profs`,`disciplinas`
+  WHERE nome = '"+ request.body.autor +"' AND  disciplina_nome = '"+ request.body.disciplina +"'
 
-   function (req, res) {
-    if (req.body.change == "update") { //if update btn is clicked
-        updateModule.saveChanges(req.body, function (err) { //call update module
-            if (err) {
-                //if error
-                req.flash("msg","Error Occured");
-                res.locals.messages = req.flash();
-                res.render('edit', { title: 'myApp'});
-            } else {
-                //on success
-                req.flash("msg", "Data updated successfully");
-                res.locals.messages = req.flash();
-                res.render('index', { 'title': 'myApp'});
-             }
 
-        });
-    }
-});
+
+
+
+
+
+INSERT INTO `prova_questoes` SELECT LAST(provas.cod_prova), questoes.cod_quest FROM provas, questoes WHERE questoes.enunciado = '"+ dados[x] +"'
