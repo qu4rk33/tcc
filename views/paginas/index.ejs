@@ -1,160 +1,150 @@
 <html lang="pt" ng-app="mwl.calendar.docs">
 <head>
-    <% include ../partes/head %>
+  <% include ../partes/head %>
 
-    <!--script src="node_modules/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar.js"></script-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.0/ui-bootstrap-tpls.min.js"></script>
-    <script src="//cdn.rawgit.com/jkbrzt/rrule/v2.1.0/lib/rrule.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/js/bootstrap-colorpicker-module.min.js"></script>
-    <script src="//mattlewis92.github.io/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/css/colorpicker.min.css" rel="stylesheet">
-    <link href="//mattlewis92.github.io/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
-    <script src="/assets/js/calendar.js"></script>
-    <style type="text/css">
-      .calendar{
-        width: 800px;
-        height: 650 px;
-      }
+  <!--script src="node_modules/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar.js"></script-->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>
 
-      #addEvento{
-        height: 200px;
-        width: 200px;
-      }
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.0/ui-bootstrap-tpls.min.js"></script>
+  <script src="//cdn.rawgit.com/jkbrzt/rrule/v2.1.0/lib/rrule.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/js/bootstrap-colorpicker-module.min.js"></script>
+  <script src="//mattlewis92.github.io/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/css/colorpicker.min.css" rel="stylesheet">
+  <link href="//mattlewis92.github.io/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
+  <script src="/assets/js/calendar.js"></script>
+  <style type="text/css">
+    .calendar{
+      width: 800px;
+      height: 650 px;
+    }
 
-
-    </style>
+    #addEvento{
+      height: 200px;
+      width: 200px;
+    }
 
 
-    <script>
-      $( function() {
+  </style>
 
 
-      });      
-      
-    </script>
+  <script>
+    $( function() {
+
+
+    });      
+
+  </script>
 
 </head>
 <body ng-controller="sgeCtrl as vm">
-    <div class="all">
+  <div class="all">
 
-        <div class="topo row  ">
-                <% include ../partes/topmenu.ejs %>
-        </div>
-          <div class="row">
-              <div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2 fixed">
-                  <% include ../partes/sidemenu.ejs %>
-              </div>
-        <div class="container-fluid">
-        
-              <div class="content col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
-                
-              
-              <div class="calendar">
-  
-                <br>
-                <div class="row">
-
-                      <div class="col-md-6 text-center">
-                        <div class="btn-group">
-
-                          <button
-                            class="btn btn-primary btn-sm"
-                            mwl-date-modifier
-                            date="vm.viewDate"
-                            decrement="vm.calendarView">
-                            Ontem
-                          </button>
-                          <button
-                            class="btn btn-default btn-sm"
-                            mwl-date-modifier
-                            date="vm.viewDate"
-                            set-to-today>
-                            Hoje
-                          </button>
-                          <button
-                            class="btn btn-primary btn-sm"
-                            mwl-date-modifier
-                            date="vm.viewDate"
-                            increment="vm.calendarView">
-                            Amanhã
-                          </button>
-                        </div>
-                      </div>
-
-                      <br class="visible-xs visible-sm">
-
-                      <div class="col-md-6 text-center">
-                        <div class="btn-group">
-                          <label class="btn btn-primary btn-sm" ng-model="vm.calendarView" uib-btn-radio="'year'">Ano</label>
-                          <label class="btn btn-primary btn-sm" ng-model="vm.calendarView" uib-btn-radio="'month'">Mês</label>
-                          <label class="btn btn-primary btn-sm" ng-model="vm.calendarView" uib-btn-radio="'week'">Semana</label>
-                          <label class="btn btn-primary btn-sm" ng-model="vm.calendarView" uib-btn-radio="'day'">Dia</label>
-                        </div>
-                      </div>
-
-                    </div>
-                
-                
-                    <mwl-calendar
-                      events="vm.events"
-                      view="vm.calendarView"
-                      view-date="vm.viewDate">
-                    </mwl-calendar>
-                  </div>
-              
-
-              <div id="addEvento">
-              <!--button class="btn btn-danger btn-block butao">Sair</button-->
-
-                <div class="container">
-                  <form>
-                    <div class="form-group form-inline">
-                      <label for="Evento">Evento:</label>
-                      <input type="text" class="form-control" ng-model="addEvento.title" placeholder="Ex: Feira de livro">
-                    </div>
-                    <div class="form-group form-inline">
-                      <label for="data">Data:</label> <input type="datetime-local" id="datepicker" ng-model="addEvento.startsAt" class="form-control">
-                      
-                      <label for="hora">cor:</label>
-                      <select ng-model="addEvento.color.primary">
-                        <option style="background-color:BlueViolet" >BlueViolet </option>
-                        <option style="background-color:BurlyWood" >BurlyWood  </option>
-                        <option style="background-color:CadetBlue" >CadetBlue  </option>
-                      </select>
-
-                      <label for="hora">cor:</label>
-                      <select ng-model="addEvento.color.secondary">
-                        <option style="background-color:DarkKhaki">DarkKhaki  </option>
-                        <option style="background-color:DarkOrange">DarkOrange   </option>
-                        <option style="background-color:DarkSeaGreen">DarkSeaGreen  </option>
-                      </select>
-                      <!--label for="hora">cor:</label> <input type="color" ng-model="addEvento.color.primary" class=" ">
-                      <label for="hora">cor 2:</label> <input type="color" ng-model="addEvento.color.secondary" class=" "-->
-                    </div>
-
-                    <button type="submit" class="btn btn-default" ng-click="addEventoCalendario(addEvento)">Cadastrar</button>
-                  </form>
-                </div>
-              </div>       
-              {{evento}}
-              <br><br>
-              {{vm.events}}
-              </div>
-      </div>
-
-        <div class="footer">
-            <footer>
-                <% include ../partes/footer %>
-            </footer>
-        </div> 
-      </div>
-
+    <div class="topo row  ">
+      <% include ../partes/topmenu.ejs %>
     </div>
+    <div class="row">
+      <div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2 fixed">
+        <% include ../partes/sidemenu.ejs %>
+      </div>
+      <div class="container-fluid">
+
+        <div class="content col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
+
+
+        <div class="calendar">
+          <div class="row form-inline text-center ">
+            <div class="btn-group">
+                <button
+                  class="btn btn-primary btn-sm"
+                  mwl-date-modifier
+                  date="vm.viewDate"
+                  decrement="vm.calendarView">
+                  Voltar
+                </button>
+                <button
+                  class="btn btn-default btn-sm"
+                  mwl-date-modifier
+                  date="vm.viewDate"
+                  set-to-today>
+                  Hoje
+                </button>
+                <button
+                  class="btn btn-primary btn-sm"
+                  mwl-date-modifier
+                  date="vm.viewDate"
+                  increment="vm.calendarView">
+                  Avançar
+                </button>
+            </div>
+            <label>  {{ vm.calendarTitle }}  </label>
+            <div class="btn-group">
+            <label class="btn btn-primary btn-sm" ng-model="vm.calendarView" uib-btn-radio="'year'">Ano</label>
+            <label class="btn btn-primary btn-sm" ng-model="vm.calendarView" uib-btn-radio="'month'">Mês</label>
+            <label class="btn btn-primary btn-sm" ng-model="vm.calendarView" uib-btn-radio="'week'">Semana</label>
+            <label class="btn btn-primary btn-sm" ng-model="vm.calendarView" uib-btn-radio="'day'">Dia</label>
+            </div>
+          </div>
+
+          <mwl-calendar
+            events="vm.events"
+            view="vm.calendarView"
+            view-date="vm.viewDate"
+            view-title="vm.calendarTitle"
+            >
+          </mwl-calendar>
+        </div>
+
+
+  <div id="addEvento">
+    <!--button class="btn btn-danger btn-block butao">Sair</button-->
+
+    <div class="container">
+      <form>
+        <div class="form-group form-inline">
+          <label for="Evento">Evento:</label>
+          <input type="text" class="form-control" ng-model="addEvento.title" placeholder="Ex: Feira de livro" required>
+        </div>
+        <div class="form-group form-inline">
+            <label for="data">Data:</label> 
+            <input type="datetime-local" id="datepicker" ng-model="addEvento.startsAt" class="form-control" required>
+
+            <label for="hora">cor:</label>
+            <select ng-model="addEvento.color.primary" required>
+              <option style="background-color:BlueViolet" >BlueViolet </option>
+              <option style="background-color:BurlyWood" >BurlyWood  </option>
+              <option style="background-color:CadetBlue" >CadetBlue  </option>
+            </select>
+
+            <label for="hora">cor:</label>
+            <select ng-model="addEvento.color.secondary" required>
+              <option style="background-color:DarkKhaki">DarkKhaki  </option>
+              <option style="background-color:DarkOrange">DarkOrange   </option>
+              <option style="background-color:DarkSeaGreen">DarkSeaGreen  </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-default" ng-click="addEventoCalendario(addEvento)">Cadastrar</button>
+      </form>
+    </div>
+  </div>       
+  
+  {{evento}}
+  <br><br>
+  {{vm.events}}
+</div>
+</div>
+
+<div class="footer">
+  <footer>
+    <% include ../partes/footer %>
+  </footer>
+</div> 
+</div>
+
+</div>
 </body>
 
 </html>
