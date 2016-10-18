@@ -1,6 +1,128 @@
 <html lang="pt">
 <head>
     <% include ../partes/head %>
+    <script>
+    $(function pesqDisciplina(){
+
+             $.post("/pesqDisc",function(data){
+                $("#disciplina").empty();
+                $("#disciplina").append($("<option disable selected />").val('Disciplina').text('Disciplina'));
+
+               for(var i = 0; i < data.length; i++) {
+                 $("#disciplina").append($("<option />").val(data[i]).text(data[i]));
+                console.log(data[i]);
+               }
+             });
+    });
+
+
+
+    $( function() {
+      $("#disciplina").change(function(){
+
+        var disciplina = $('#disciplina').val();
+
+        console.log(disciplina);
+
+        $.ajax({
+          url: "/pesqMat",  // AQUI É A URL QUE SERA ENVIADO
+          type: "POST",   //TIPO DE ENVIO
+          dataType: "json", //TIPO DE DADO QUE SERA PASSADO
+          data:JSON.stringify({
+            disciplina: disciplina
+          }),
+
+          contentType: "application/json",
+          cache: false,
+          timeout: 5000,
+          complete: function() {
+            console.log('process complete');
+          },
+          success: function(data) {
+            console.log(disciplina);
+            console.log('process sucess');
+            $("#materia").empty();
+            $("#materia").append($("<option disable selected />").val('Materia').text('Materia'));
+            for(var i = 0; i < data.length; i++) {
+              $("#materia").append($("<option />").val(data[i]).text(data[i]));
+              console.log(data[i]);
+            }
+          },
+
+          error: function() {
+            console.log('process error');
+          },
+        });
+      });
+    });
+  //  $(function() {
+  //    $("#cadastrar").( function(){
+        //temos/ que descobrir se ele ta chegando aqui, só que o console.log nao ta aparecendo
+    //    alert("");
+        //var autor = $('#autor').val();
+    //    console.log("autor"); //o console log aqui exibe a msg no console do navegagor , nao no cmd
+        // var visibilidade = $('#visibilidade').val();
+        // var disciplina = $('#disciplina').val();
+        // var materia = $('#materia').val();
+        // var serie = $('#serie').val();
+        // var anoC = $('#criacao').val();
+        // var nivel = $('#nivel').val();
+        // var tipo = $('#tipo').val();
+        // var enunciado = $('#enunciado').val();
+        // var gabarito = $('#gabarito').val();
+        // if(tipo == "Objetiva")
+        // {var opcA = $('#opcA').val();
+        // var opcB = $('#opcB').val();
+        // var opcC = $('#opcC').val();
+        // var opcD = $('#opcD').val();
+        // var opcE = $('#opcE').val();}
+    //    $.ajax({
+      //    url: "/cadQuest",  // AQUI É A URL QUE SERA ENVIADO
+      //    type: "POST",   //TIPO DE ENVIO
+      //    dataType: "json", //TIPO DE DADO QUE SERA PASSADO
+      //    data:JSON.stringify({
+      //      autor: autor // ,
+            // visibilidade: visibilidade,
+            // disciplina: disciplina,
+            // materia: materia,
+            // serie: serie,
+            // anoC: anoC,
+            // nivel: nivel,
+            // tipo: tipo,
+            // enunciado: enunciado,
+            // gabarito: gabarito,
+            // opcA: opcA,
+            // opcB: opcB,
+            // opcC: opcC,
+            // opcD: opcD,
+            // opcE: opcE
+      //    }),
+
+        //  contentType: "application/json",
+      //    cache: false,
+      //    timeout: 5000,
+      //    complete: function() {
+      //      console.log('process complete');
+      //    },
+      //    success: function(data) {
+      //      console.log(disciplina);
+      //      console.log('process sucess');id
+      //    },
+//
+          //error: function() {
+        //    console.log('process error');
+        //  },
+      //  });
+
+//      });
+
+
+//    });
+
+
+
+
+    </script>
 </head>
 <body>
     <div class="all">
@@ -23,56 +145,61 @@
 
             <br>
 
-            <form class="form-inline" action="/cadastroQuest" method="post" name="cadastroQuestao">
+            <form class="form-inline" method="Post" action="/cadastroQuest" name="cadastroQuestao">
 
-              <input type="text" name="autor" value="" placeholder="Autor" class="form-control" style="width:300px;" onblur="loadDisciplinas()">&nbsp&nbsp
 
-              <select class="form-control" name="visibilidade" style="width:300px;">
+              <select class="form-control" id="autor"  name="autor" style="width:300px;" required>
+                <option disabled selected>Autor</option>
+
+                <option >   <%= user %>    </option>
+                <option>Outro</option>
+              </select>&nbsp&nbsp
+
+              <select class="form-control" id="visibilidade" name="visibilidade" style="width:300px;" required>
                 <option disabled selected>Visibilidade</option>
                 <option>Privada</option>
                 <option>Pública</option>
               </select><br><br>
 
-              <select class="form-control" name="disciplina" onclick="campoPreenchido('cadastroQuestao', 'autor', 'Informe o autor da questão!')" style="width:300px;">
+              <select class="form-control" id="disciplina" name="disciplina" style="width:300px;" required>
                 <option disabled selected>Disciplina</option>
               </select>&nbsp&nbsp
 
-              <select class="form-control" name="materia" style="width:300px;" onclick="if(campoPreenchido('cadastroQuestao', 'autor', 'Informe o autor da questão!'))campoPreenchido('cadastroQuestao', 'disciplina', 'Informe a disciplina da questão!')">
+              <select class="form-control" id="materia" name="materia" style="width:300px;" required>
                 <option disabled selected>Materia</option>
               </select><br><br>
 
-              <select class="form-control" name="serie" style="width:300px;">
+              <select class="form-control" id="serie" name="serie" style="width:300px;" required>
                 <option disabled selected>Série</option>
                 <option>1º ano</option>
                 <option>2º ano</option>
                 <option>3º ano</option>
               </select>&nbsp&nbsp
 
-              <input type="text" name="criacao" value="" placeholder="Ano de criação" class="form-control" style="width:300px;"><br><br>
+              <input type="number" id="criacao" name="criacao" value="" placeholder="Ano de criação" class="form-control" style="width:300px;" required><br><br>
 
-              <select class="form-control" name="tipo" onchange="carregaCampos()" style="width:300px;">
+              <select class="form-control" id="tipo" name="tipo" onchange="carregaCampos()" style="width:300px;" required>
                 <option disabled selected>Tipo</option>
                 <option>Discursiva</option>
                 <option>Objetiva</option>
               </select>&nbsp&nbsp
 
-              <select class="form-control" name="nivel" style="width:300px;">
+              <select class="form-control" id="nivel" name="nivel" style="width:300px;" required>
                 <option disabled selected>Nível</option>
                 <option>Básica</option>
                 <option>Mediana</option>
                 <option>Avançada</option>
               </select><br><br>
 
-              <textarea name="name" rows="10" class="form-control" style="resize: none; width:610px;" placeholder="Enunciado"></textarea><br><br>
+              <textarea id="enunciado" name="enunciado" rows="10" class="form-control" style="resize: none; width:610px;" placeholder="Enunciado" required></textarea><br><br>
 
-              <div class="" id="dadosQuest" style="text-align:center; margin-left:0px;width:610px;">
+              <div class="" id="dadosQuest" name="dadosQuest" style="text-align:center; margin-left:0px;width:610px;" required>
 
               </div>
 
-            </form>
 
           </div>
-
+        </form>
           <div class="footer">
             <footer>
                 <% include ../partes/footer %>

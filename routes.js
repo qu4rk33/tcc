@@ -1,4 +1,8 @@
 var HomeController = require('./controllers/HomeController');
+var CadController = require('./controllers/CadController');
+var ConsultCtrl = require('./controllers/ConsultCtrl');
+var TestCTRL = require('./controllers/TestCTRL');
+var bodyParser = require('body-parser').json();
 
 
 
@@ -13,7 +17,11 @@ module.exports = function(app,passport) {
             app.get('/cadastroProvas',isLogged, HomeController.cadastroProvas);
             app.get('/cadastroNotas',isLogged, HomeController.cadastroNotas);
             app.get('/diarioPresenca',isLogged, HomeController.diarioPresenca);
-            app.get('/calendario',isLogged, HomeController.calendario);
+            app.get('/consultaQuest',isLogged, HomeController.consultaQuest);
+            app.get('/consultaProf',isLogged, HomeController.consultaProf);
+            app.get('/consultaTurma',isLogged, HomeController.consultaTurma);
+            app.get('/consultaAluno',isLogged, HomeController.consultaAluno);
+
 
 
             app.post('/cadastro', passport.authenticate('cadastro', {
@@ -28,12 +36,18 @@ module.exports = function(app,passport) {
             failureFlash : true,
         }));
 
-            app.post('/cadastroQuest', passport.authenticate('cadastroQuest', {
-              successRedirect : '/cadastroQuest',
-              failureRedirect : '/cadastroQuest',
-              failureFlash : true
-        }));
 
+             app.post('/cadastroQuest', CadController.cadastroQuest);
+             app.post('/cadastroProva', CadController.cadastroProva);
+             app.post('/deletarQuest', ConsultCtrl.removerQuest);
+             app.post('/pesqMat', CadController.pesquisaMat);
+             app.post('/pesqDisc', CadController.pesquisaDisc);
+             app.post('/pesqQuest', CadController.pesquisaQuest);
+             app.post('/pesca/:disciplina', TestCTRL.pesquisaMorte);
+             app.post('/pesca', TestCTRL.pesquisaMorte2);
+             app.post('/pescaconsul', ConsultCtrl.pesquisateste);
+             app.post('/mostraturma', ConsultCtrl.pesquisaturma);
+                          app.post('/pegaaluno', ConsultCtrl.listalunos);
 
 };
 function isLogged(request, response, next) {
