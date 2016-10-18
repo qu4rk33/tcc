@@ -1,7 +1,7 @@
 function carregaCampos(){
   var tipo = document.forms["cadastroQuestao"]["tipo"].value;
   if (tipo == "Discursiva") {
-    var dados = '<textarea name="name" rows="10" class="form-control" style="resize: none; width:610px;" placeholder="Gabarito"></textarea><br><br>';
+    var dados = '<textarea name="gabarito" rows="10" class="form-control" style="resize: none; width:610px;" placeholder="Gabarito"></textarea><br><br>';
     dados += '<button type="submit" name="cadastrar" class="btn btn-default">Cadastrar</button>';
     document.getElementById("dadosQuest").innerHTML = dados;
   }
@@ -22,6 +22,20 @@ function carregaCampos(){
     document.getElementById("dadosQuest").innerHTML = dados;
   }
 }
+
+function consulQuest(){
+  console.log('iza é minha');
+
+  var tipo = document.forms["consultaQuest"]["autor"].value;
+  console.log(tipo);
+  if (tipo != "Autor") {
+    var dados = '<button type="submit" name="cadastrar" class="btn btn-default">Cadastrar</button>';
+    document.getElementById("dadosQuest").innerHTML = dados;
+
+  }
+
+}
+
 
 function campoPreenchido(formulario, campo, mensagem){
   var valorDoCampo = document.forms[formulario][campo].value;
