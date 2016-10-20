@@ -17,6 +17,7 @@ exports.removerQuest   = 	function(req, res){
 exports.pesquisateste   = 	function(req, res){
 //  console.log("Entrou 1");
       var questoes = [];
+
       var qry =  "SELECT questoes.enunciado, questoes.gabarito, questoes.cod_quest FROM questoes WHERE autor= '" + req.body.autor + "' and nivel = '"+ req.body.nivel +"' and tipo = '"+ req.body.tipo +"' and disciplina_id = (SELECT `disciplina_id` FROM `disciplinas` WHERE disciplina_nome = '"+ req.body.disciplina +"') AND materia_id = (SELECT `materia_id` FROM `materia` WHERE nome = '"+ req.body.materia +"' ) AND ano_letivo = '"+ req.body.creation +"' AND anoserie = '"+ req.body.serie +"' GROUP BY enunciado" ;
       console.log(qry);
       connDB.query(qry,function(err,rows){
@@ -74,6 +75,35 @@ exports.pesquisaturma	=	function(req, res){
 
 
 
+
+/*----------------- calendario ----------------------*/
+exports.pesquisaEvento  = function(req, res){
+  var eventos = [];  
+  
+  var qry = "SELECT `evento`, `datahora`, `cor`, `cor2` FROM `calendario` WHERE `matricula`='"+req.user.matricula+"'  ";
+
+  connDB.query(qry,function(err,rows){
+
+    for (var i = 0, len = rows.length; i < len; i++)
+      {
+        eventos.push({
+          title    : rows[i].evento, 
+          startsAt :rows[i].datahora, 
+          color:{
+            primary   :rows[i].cor,
+            secondary : rows[i].cor2 
+          }
+        });
+      }
+   
+  res.json(eventos);
+  console.log(eventos);
+  console.log(qry+"\n\n\t\tppk em chamas\n\n");
+
+  });
+
+
+};
 
 
 

@@ -10,7 +10,7 @@
 
                for(var i = 0; i < data.length; i++) {
                  $("#disciplina").append($("<option />").val(data[i]).text(data[i]));
-                console.log(data[i]);
+                //console.log(data[i]);
                }
              });
     });
@@ -22,7 +22,7 @@
 
         var disciplina = $('#disciplina').val();
 
-        console.log(disciplina);
+        //console.log(disciplina);
 
         $.ajax({
           url: "/pesqMat",  // AQUI É A URL QUE SERA ENVIADO
@@ -39,13 +39,13 @@
             console.log('process complete');
           },
           success: function(data) {
-            console.log(disciplina);
+            //console.log(disciplina);
             console.log('process sucess');
             $("#materia").empty();
             $("#materia").append($("<option disable selected />").val('Materia').text('Materia'));
             for(var i = 0; i < data.length; i++) {
               $("#materia").append($("<option />").val(data[i]).text(data[i]));
-              console.log(data[i]);
+              //console.log(data[i]);
             }
           },
 

@@ -1,5 +1,5 @@
 exports.index		=	function(request, response){
-    response.render('paginas/index',{	user: request.user.username });
+    response.render('paginas/index',{	user: request.user.username  ,  matricula: request.user.matricula  });
 };
 exports.teste		=	function(request, response){
     response.render('paginas/teste');

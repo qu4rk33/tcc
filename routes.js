@@ -37,17 +37,24 @@ module.exports = function(app,passport) {
         }));
 
 
-             app.post('/cadastroQuest', CadController.cadastroQuest);
-             app.post('/cadastroProva', CadController.cadastroProva);
-             app.post('/deletarQuest', ConsultCtrl.removerQuest);
-             app.post('/pesqMat', CadController.pesquisaMat);
-             app.post('/pesqDisc', CadController.pesquisaDisc);
-             app.post('/pesqQuest', CadController.pesquisaQuest);
-             app.post('/pesca/:disciplina', TestCTRL.pesquisaMorte);
-             app.post('/pesca', TestCTRL.pesquisaMorte2);
-             app.post('/pescaconsul', ConsultCtrl.pesquisateste);
-             app.post('/mostraturma', ConsultCtrl.pesquisaturma);
-                          app.post('/pegaaluno', ConsultCtrl.listalunos);
+            app.post('/cadastroQuest', CadController.cadastroQuest);
+            app.post('/cadastroProva', CadController.cadastroProva);
+            app.post('/deletarQuest', ConsultCtrl.removerQuest);
+            app.post('/pesqMat', CadController.pesquisaMat);
+            app.post('/pesqDisc', CadController.pesquisaDisc);
+            app.post('/pesqQuest', CadController.pesquisaQuest);
+            app.post('/pesca/:disciplina', TestCTRL.pesquisaMorte);
+            app.post('/pesca', TestCTRL.pesquisaMorte2);
+            app.post('/pescaconsul', ConsultCtrl.pesquisateste);
+            app.post('/mostraturma', ConsultCtrl.pesquisaturma);
+            app.post('/pegaaluno', ConsultCtrl.listalunos);
+
+            /*-----------Calendario---------------------------------*/
+            app.post('/cadastroEvento', CadController.cadastroEvento);
+           
+            app.post('/pesquisaEvento', ConsultCtrl.pesquisaEvento);
+            app.get('/pesquisaEvento', ConsultCtrl.pesquisaEvento);
+
 
 };
 function isLogged(request, response, next) {
