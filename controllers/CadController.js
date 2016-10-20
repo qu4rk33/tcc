@@ -1,73 +1,125 @@
 var connDB = require('../models/mysqlmodule.js');
 
+
+
+
+
 exports.pesquisaDisc = function(req, res){
 
-    var disciplinas = [];
-    connDB.query("select * from disciplinas ",function(err,rows){
-      if (err)
+  var disciplinas = [];
+  connDB.query("select * from disciplinas ",function(err,rows){
+    if (err)
       req.flash('MSGCadQuest', err);
-      if (rows.length) {
+    if (rows.length) {
 
-               for (var i = 0, len = rows.length; i < len; i++) {
-                  disciplinas.push(rows[i].disciplina_nome);
-               }
-               res.json(disciplinas);
-      }
+     for (var i = 0, len = rows.length; i < len; i++) {
+      disciplinas.push(rows[i].disciplina_nome);
+    }
+    res.json(disciplinas);
 
-    });
+
+
+  }
+
+ });
 
 };
 
-
 exports.pesquisaMat = function(request, res){
-    var materias = [];
+  var materias = [];
 
-    connDB.query("SELECT * FROM `materia`, disciplinas WHERE materia.disciplina_id = disciplinas.disciplina_id AND disciplinas.disciplina_nome = '"+ request.body.disciplina +"'",function(err,rows){
-      if (err)
+
+  connDB.query("SELECT * FROM `materia`, disciplinas WHERE materia.disciplina_id = disciplinas.disciplina_id AND disciplinas.disciplina_nome = '"+ request.body.disciplina +"'",function(err,rows){
+    if (err)
       request.flash('MSGCadQuest', err); //Aqui ele retorna a msg se a qstao ja existir
-      if (rows.length) {
+    if (rows.length) {
 
-               for (var i = 0, len = rows.length; i < len; i++) {
-                  materias.push(rows[i].nome);
-               }
-               res.json(materias);
+     for (var i = 0, len = rows.length; i < len; i++) {
+      materias.push(rows[i].nome);
+    }
+    res.json(materias);
 
-      }
-    });
+
+
+  }
+
+  });
+
 };
 
 exports.pesquisaQuest = function(request, response){
 
-    var questoes = [];
+  var questoes = [];
 
-    console.log(request.body.materia);
+  console.log(request.body.materia);
 
-    connDB.query("SELECT questoes.enunciado, questoes.nivel, questoes.tipo FROM `questoes`, disciplinas, materia WHERE materia.nome = '"+ request.body.materia + "' AND materia.materia_id = questoes.materia_id GROUP BY enunciado",function(err,rows){
-      if (err)
+  connDB.query("SELECT questoes.enunciado, questoes.nivel, questoes.tipo FROM `questoes`, disciplinas, materia WHERE materia.nome = '"+ request.body.materia + "' AND materia.materia_id = questoes.materia_id GROUP BY enunciado",function(err,rows){
+    if (err)
       request.flash('MSGCadQuest', err);
-      if (rows.length) {
+    if (rows.length) {
 
-               for (var i = 0, len = rows.length; i < len; i++) {
-                  questoes.push([rows[i].enunciado, rows[i].nivel, rows[i].tipo]);
-               }
-               response.json(questoes);
+     for (var i = 0, len = rows.length; i < len; i++) {
+      questoes.push([rows[i].enunciado, rows[i].nivel, rows[i].tipo]);
+    }
+    response.json(questoes);
 
 
 
-      }
+  }
 
-    });
+  });
 
 };
 
 exports.cadastroDiario  = function(request,response, next){
-    var qry="INSERT INTO prof_diario(matricula,turma,data,disciplina_id,comentario) VALUES ()";
 
-    console.log(request.body.chk);
+  var data= request.body.txtSelectedDate;
+  var datasplit = data.split("/");
+  var dataformatada= datasplit[2] +'-'+ datasplit[1] +'-'+ datasplit[0];
+
+  var confirm=0;
+  console.log(request.body.comentario );
+  var qry="INSERT INTO prof_diario(matricula,turma,data,disciplina_id,comentario) SELECT '"+request.body.matriculaProf+"','"+request.body.turma+"','"+dataformatada+"',disciplina_id , '"+request.body.comentario +"' from disciplinas where disciplina_nome= '"+request.body.disciplina+"' ";
+  // / console.log(qry);
+
+  //   console.log(request.body.matriculas);
+
+  //   console.log(chks);
+
+
+  connDB.query(qry,function(err,rows){
+    if (err)
+      console.log(err);      
+
+    console.log("AQUI CUZAO");      
+
+    confirm=1;
+    console.log(confirm);
+
+    if(confirm==1){
+
+      for(var i=0; i<request.body.matriculas.length; i++){
+       var qry2=" INSERT INTO prof_diario_aluno (cod_aula,matricula,presente) SELECT prof_diario.cod_aula,'"+request.body.matriculas[i]+"', '"+request.body.chks[i]+"'  FROM   prof_diario   WHERE   prof_diario.matricula ='"+request.body.matriculaProf+"'                            AND     prof_diario.data='"+dataformatada+"'  AND     prof_diario.turma='"+request.body.turma+"'"
+
+       console.log(qry2);
+       connDB.query(qry2,function(err,rows){
+        if(err){
+          console.log('Error connecting to Db');
+          return;
+        }
+        console.log('Connection established');
+
+
+      });
+     }
+     console.log('EM-VIADO');
+   }
+
+ });
+
 };
 
-
-exports.cadastroProva   = function(request, response, next){
+exports.cadastroProva		=	function(request, response, next){
   var dados = request.body.dados;
   var qry= "INSERT INTO `provas`(`matricula`, `cod_disciplina`, `anoserie`, `tipo_avaliacao`)  SELECT `matricula`,`disciplina_id` , '"+ request.body.serie +"','"+ request.body.tipo +"' FROM `profs`,`disciplinas` WHERE nome = '"+ request.body.autor +"' AND  disciplina_nome = '"+ request.body.disciplina +"'  " ;
   var confirm= 0;
@@ -78,7 +130,7 @@ exports.cadastroProva   = function(request, response, next){
 
 
     confirm=1;
-      console.log(confirm);
+    console.log(confirm);
 
   });
   if(confirm !=1){
@@ -91,21 +143,20 @@ exports.cadastroProva   = function(request, response, next){
       console.log(qry2);
       connDB.query(qry2,function(err,rows){
         if(err){
-    console.log('Error connecting to Db');
-    return;
-    }
-    console.log('Connection established');
+          console.log('Error connecting to Db');
+          return;
+        }
+        console.log('Connection established');
 
 
-        });
+      });
     }
 
   }
 
 };
 
-exports.cadastroQuest   = function(request, response, next){
-  console.log("Renan n faz nada");
+exports.cadastroQuest		=	function(request, response, next){
 
   var autor    =   request.body.autor;
   var visibilidade = request.body.visibilidade;
@@ -119,13 +170,12 @@ exports.cadastroQuest   = function(request, response, next){
   var gabarito  = request.body.gabarito;
 
   connDB.query("select * from questoes where enunciado = '"+ enunciado +"'",function(err,rows){
-  if (err)
-    request.flash('MSGCadQuest', err); //Aqui ele retorna a msg se a qstao ja existir
-  if (rows.length) 
+    if (err)
+  request.flash('MSGCadQuest', err); //Aqui ele retorna a msg se a qstao ja existir
+  if (rows.length) {
     request.flash('MSGCadQuest', 'Questão já existente!'); //Aqui ele retorna a msg se a qstao ja existir
-   
+  } 
   else {
-
     if(tipo == "Discursiva")
     {
       var insertQuest = "INSERT INTO `questoes`(`cod_quest`, `autor`, `nivel`, `tipo`, `disciplina_id`, `materia_id`, `enunciado`, `gabarito`, `ano_letivo`, `anoserie`, `visibilidade`) VALUES('', '"+ autor +"', '"+ nivel +"', '"+ tipo +"', (SELECT `disciplina_id` FROM `disciplinas` WHERE disciplina_nome = '"+ disciplina + "' ), (SELECT `materia_id` FROM `materia` WHERE nome = '" + materia + "' ), '"+ enunciado +"', '"+ gabarito +"', '"+ anoC +"', '"+ serie +"', '"+ visibilidade +"')";
@@ -139,39 +189,41 @@ exports.cadastroQuest   = function(request, response, next){
         e : request.body.opcE,
       }
       var insertQuest = "INSERT INTO `questoes`(`autor`, `nivel`, `tipo`, `disciplina_id`, `materia_id`, `enunciado`, `op1`, `op2`, `op3`, `op4`, `op5`, `gabarito`, `ano_letivo`, `anoserie`, `visibilidade`) VALUES('" + autor + "', '" + nivel + "', '" + tipo + "', (SELECT `disciplina_id` FROM `disciplinas` WHERE disciplina_nome = '"+ disciplina + "' ), (SELECT `materia_id` FROM `materia` WHERE nome = '" + materia + "' ), '" + enunciado + "', '" + opcoes.a + "', '" + opcoes.b + "', '" + opcoes.c + "', '" + opcoes.d + "', '" + opcoes.e + "', '" + gabarito + "', '" + anoC + "', '" + serie + "', '" + visibilidade + "', )";
-      connDB.query(insertQuest,function(err,rows){
-        request.flash('MSGCadQuest', 'Questao Cadastrada!');
-       });
+      connDB.query(insertQuest,function(err,rows){ 
+        request.flash('MSGCadQuest', 'Questao Cadastrada!'); 
+      });
+
     }
   }
 
-  return   response.render('paginas/cadastroQuest', {message: request.flash('MSGCadQuest','Dados Gravados Com sucesso'), user: request.user.username});
-});
+  return   response.render('paginas/cadastroQuest', {
+    message: request.flash('MSGCadQuest','Dados Gravados Com sucesso'), user: request.user.username});
+  });
 
-};  
+};
 
 
 //------------------ Calendario-------------------------------------
 exports.cadastroEvento   = function(request, response, next){
-  console.log("cadastroEvento inicio ");
-
+  console.log("\n\t Evento \n");
   //var matricula= request.body.matricula;
+  var matricula= request.user.matricula;
   var evento   = request.body.title;
   var data     = request.body.startsAt;
   var cor      = request.body.corPrimary;
   var cor2     = request.body.corSecondary;
 
-  var inserEvento = "INSERT INTO `calendario`(`matricula`, `evento`, `datahora`, `cor`, `cor2`) VALUES ('"+req.user.matricula+"','"+evento+"','"+data+"','"+cor+"','"+cor2+"')";
+  var inserEvento = "INSERT INTO `calendario`(`matricula`, `evento`, `datahora`, `cor`, `cor2`) VALUES ('"+matricula+"','"+evento+"','"+data+"','"+cor+"','"+cor2+"')";
   
   connDB.query(inserEvento,function(err,rows){ if (err) request.flash('MSGCadEvento', err);});          
 
-  console.log(" cadastroEvento fim ");
+  return   response.render('paginas/calendario', {message: request.flash('MSGCadQuest','Dados Gravados Com sucesso'), user: request.user.username});
 
-  return   response.render('paginas/index', {message: request.flash('MSGCadQuest','Dados Gravados Com sucesso'), user: request.user.username});
+  console.log("\n\t Evento cadastrado \n");
 
 };
-  
-  
+
+
 
 
 

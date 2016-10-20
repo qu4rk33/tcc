@@ -1,5 +1,5 @@
 exports.index		=	function(request, response){
-    response.render('paginas/index',{	user: request.user.username  ,  matricula: request.user.matricula  });
+    response.render('paginas/index',{	user: request.user.username });
 };
 exports.teste		=	function(request, response){
     response.render('paginas/teste');
@@ -15,9 +15,17 @@ exports.logOut		=	function(request, response){
 	response.redirect('/');
 };
 
+exports.calendario      =   function(request, response){
+  response.render('paginas/calendario',{  user: request.user.username ,  matricula: request.user.matricula     });
+   
+};
 exports.cadastroQuest		=	function(request, response){
 
     response.render('paginas/cadastroQuest',{  message: request.flash('MSGCadQuest','Dados Gravados Com sucesso'), user: request.user.username     });
+
+};
+exports.consultaProvas      =   function(request, response){
+    response.render('paginas/consultaProvas',{  user: request.user.username     });
 };
 exports.cadastroProvas		=	function(request, response){
     response.render('paginas/cadastroProvas',{  user: request.user.username     });
@@ -39,5 +47,6 @@ exports.cadastroNotas		=	function(request, response){
     response.render('paginas/cadastroNotas',{   user: request.user.username     });
 };
 exports.diarioPresenca		=	function(request, response){
-    response.render('paginas/diarioPresenca',{  user: request.user.username     });
+    response.render('paginas/diarioPresenca',{  user: request.user.username ,  matricula: request.user.matricula          });
 };
+

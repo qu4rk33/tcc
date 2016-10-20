@@ -1,17 +1,375 @@
-<html lang="pt">
+﻿<html lang="pt">
 <head>
     <% include ../partes/head %>
 
        <script>
- $( function() {
-  $( "#datepicker" ).datepicker({
-        yearRange: '1900:2050',
-    changeMonth: true,
-    changeYear: true,
-    altFormat: "yy-mm-dd",
-    altField: "#alt-date"
-  });
-} );
+
+       
+
+   $(function() {
+    var viadagem = function (){
+       var nometurma = $('#nometurma').val();
+                   
+                   $.ajax({
+                       url: "/pegaaluno", // AQUI É A URL QUE SERA ENVIADO
+                       type: "POST", //TIPO DE ENVIO
+                       dataType: "json", //TIPO DE DADO QUE SERA PASSADO
+                       data: JSON.stringify({
+                           nometurma: nometurma
+
+                       }),
+                       contentType: "application/json",
+                       cache: false,
+                       timeout: 5000,
+                       complete: function() {
+                           console.log('process complete');
+                       },
+
+                       success: function(data) {
+                           console.log(data);
+                           var alunos = [];
+                           alunos = data;
+
+
+                           $("#IzaMyLuv").empty();
+                           for (var i = 0, p = 1; i < data.length; i++, p++) {
+                               $("#IzaMyLuv").append($("<tr/>")
+                                   .append($("<td />").val(i + 1).text(i + 1))
+                                   .append($("<td name='matriculaTable' id='matriculaTable' />").val(data[i][1]).text(data[i][1]))
+                                   .append($("<td />").val(data[i][0]).text(data[i][0]))
+                                   .append($("<td />").val(data[i][2]).text(data[i][2]))
+                                   .append("<input type='checkbox' id='chk' name='chk' value='true'  /> ")
+                                   
+
+                                   );
+
+
+                               console.log(data[i]);
+                           }
+
+
+                           console.log('process sucess');
+                       },
+
+                       error: function() {
+                           console.log('process error');
+                       },
+                   });
+
+
+}
+     var mat = <%= matricula %>; //isso da cerriato
+   //  viadagem();
+       $('#txtSelectedDate').val($.datepicker.formatDate('dd/mm/yy', new Date()));
+               $.ajax({
+                   // AQUI ELE FAZ UMA REQUISICAO AJAX. É TIPO O COMANDO POST QUE ESTAVAMOS USANDO, A DIFERENÇA É QUE O POST É UMA VERSAO ABREERIC
+                   url: "/mostraturma", // AQUI É A URL QUE SERA ENVIADO
+                   type: "POST", //TIPO DE ENVIO
+                   dataType: "json", //TIPO DE DADO QUE SERA PASSADO
+                   data: JSON.stringify({
+
+                       matricula: mat
+
+                   }),
+                   contentType: "application/json",
+                   cache: false,
+                   timeout: 5000,
+                   complete: function() {
+                       //called when complete
+                       console.log('process complete');
+                   },
+
+                   success: function(data) {
+                       console.log(data);
+                       var name = [];
+                       name = data;
+                       document.getElementById("btn-mostraturma").innerHTML = name.toString();
+
+                       console.log('process sucess');
+                   },
+
+                   error: function() {
+                       console.log('process error');
+                   },
+               });
+
+               $("#txtSelectedDate").datepicker({
+                   yearRange: '1900:2050',
+                   changeMonth: true,
+                   changeYear: true,
+                   altFormat: "dd/mm/yy",
+                   dateFormat: "dd/mm/yy",
+                   altField: "#alt-date"
+               });
+               $("#nomedisciplina").change(function(){
+                brotheragem();
+
+               });
+               $("#nometurma").change(function() {
+                   $.ajax({
+
+                           url: "/pesqDiscProf",
+                           type: "POST", //TIPO DE ENVIO
+                           dataType: "json", //TIPO DE DADO QUE SERA PASSADO
+                           data: JSON.stringify({
+
+                               matricula: mat
+
+                           }),
+                           contentType: "application/json",
+                           cache: false,
+                           timeout: 5000,
+                           complete: function() {
+                               //called when complete
+                               console.log('process complete');
+                           },
+
+                           success: function(data) {
+                               console.log(data);
+                               var opcoes = [];
+                               opcoes = data;
+
+
+
+                          var mySelect = $('#nomedisciplina');
+                          $.each(opcoes, function(val, text) {
+                              mySelect.append(
+                                  $('<option></option>').html(text)
+                              );
+                          });
+
+
+
+                               console.log('process sucess');
+
+
+                           },
+
+                           error: function() {
+                               console.log('process error');
+                           },
+                       });
+                 });
+var brotheragem = function() {
+             var nometurma = $('#nometurma').val();
+                    var  data= $('#txtSelectedDate').val();
+
+
+
+                     $.ajax({
+                       url: "/pegaaula", // AQUI É A URL QUE SERA ENVIADO
+                       type: "POST", //TIPO DE ENVIO
+                       dataType: "json", //TIPO DE DADO QUE SERA PASSADO
+                       data: JSON.stringify({
+                               txtSelectedDate:  data,
+                               nometurma: nometurma
+                       }),
+                       contentType: "application/json",
+                       cache: false,
+                       timeout: 5000,
+                       complete: function() {
+                           console.log('process complete');
+                       },
+
+                       success: function(data) {
+
+
+
+
+
+          console.log('process sucess');
+          $("#IzaMyLuv").empty();
+          var tamanho=data.length;
+          var txt="";
+         for(var i = 0; i < data.length  ; i++) {
+                if (!(i == data.length - 1)){
+                  if(data[i][2] == "true" ){
+
+         $("#IzaMyLuv").append($("<tr/>")
+                                   .append($("<td />").val(i + 1).text(i + 1))
+
+           .append($("<td/>").val(data[i][1]).text(data[i][1]))
+           .append($("<td style='text-align:center;'/>").val(data[i][0]).text(data[i][0]))
+        //   .append($("<td style='text-align:center;'/>").val(data[i][2]).text(data[i][2]))
+          
+                                  .append($("<input type='checkbox' id='chk' name='chk' value='true' /> ").prop('checked', true))
+     
+
+
+
+
+           .append($("<td  style='align:right; width:100px;'/>")
+         
+         ));
+            }
+            else {
+                       $("#IzaMyLuv").append($("<tr/>")
+                                   .append($("<td />").val(i + 1).text(i + 1))
+
+           .append($("<td/>").val(data[i][1]).text(data[i][1]))
+           .append($("<td style='text-align:center;'/>").val(data[i][0]).text(data[i][0]))
+               .append($("<input type='checkbox' id='chk' name='chk' value='true' /> ").prop('checked', false))
+
+
+
+
+
+           .append($("<td  style='align:right; width:100px;'/>")
+         
+         ));
+
+
+            }
+                }
+                  else {
+                    $('#textAreas').val(data[i][0]);
+                  }
+
+            
+  
+     
+
+          //$('#textAreas').val(data[tamanho])
+         }
+
+
+                       },
+
+                       error: function() {
+                        viadagem();
+                           console.log('process error');
+                       },
+                   });
+
+
+
+}
+
+
+                      $("#btDiaAnterior").click(function() {
+
+
+                   var data = $("#txtSelectedDate").datepicker("getDate");
+                   $("#txtSelectedDate").datepicker("setDate", new Date(data.getFullYear(), data.getMonth(), data.getDate() - 1));
+
+           brotheragem();
+
+               });
+               $("#btDiaPosterior").click(function() {
+                   var data = $("#txtSelectedDate").datepicker("getDate");
+                   $("#txtSelectedDate").datepicker("setDate", new Date(data.getFullYear(), data.getMonth(), data.getDate() + 1));
+           brotheragem();
+
+               });
+ 
+
+              $("#btAreas").click(function() {
+ var nometurma = $('#nometurma').val();
+                    var  data= $('#txtSelectedDate').val();
+                     var coment= $('#textAreas').val();
+            
+                    var disciplina= $('#nomedisciplina').val();
+
+              //      var i = 1;
+
+              //      $('input[type=checkbox]').each(function() {
+
+
+
+
+              //          if (this.checked) {
+
+              //              //   console.log("value='"+i+"'");
+              //              $("#chkHidden[alt='" + i + "']").prop('disabled', true);
+              //              console.log('desabilitou ');
+              //          } else {
+              //              //   document.getElementById("chkHidden").disabled=false;
+              //              // console.log('false');
+
+              //          }
+              //          i++;
+
+
+              //      });
+
+
+
+             var table = document.getElementById('tabletop');
+
+              var checks =[];
+                  $('input[type=checkbox]').each(function(){
+                          //if(this.checked){
+                                checks.push(this.checked);
+
+                       //   }
+
+                  });
+
+
+                  
+
+                      var tabela = [];
+
+
+
+              
+              for(var r = 1, i =0 ; r < table.rows.length; r++,i++){
+                tabela[i] = table.rows[r].cells[1].innerHTML;
+
+
+              }
+
+
+               // console.log(table);
+
+
+                   $.ajax({
+                       url: "/cadastroDiario", // AQUI É A URL QUE SERA ENVIADO
+                       type: "POST", //TIPO DE ENVIO
+                       dataType: "json", //TIPO DE DADO QUE SERA PASSADO
+                       data: JSON.stringify({
+                        chk:chk,
+                           matriculaProf:mat,
+                           txtSelectedDate:data,
+                           disciplina:disciplina,
+                           comentario:coment,
+                           turma: nometurma,
+                           matriculas:tabela,
+                           chks:checks
+
+                       }),
+                       contentType: "application/json",
+                       cache: false,
+                       timeout: 5000,
+                       complete: function() {
+                           console.log('process complete');
+                       },
+
+                       success: function(data) {
+
+
+                           console.log('process sucess');
+                       },
+
+                       error: function() {
+                           console.log('process error');
+                       },
+                   });
+
+
+
+               });
+
+           $("#btn-consultar").click(function() {
+            
+              viadagem();
+
+               });
+    
+
+   });
+
+
 </script>
 </head>
 <body>
@@ -26,53 +384,95 @@
               </div>
         <div class="container-fluid">
 
+
+
           <div class="content col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
-            <H3>Cadastro de questões</H3>
+            <H3>Diário de Presença</H3>
+
             <br>
 
-            <form class="form-inline" action="" method="post" name="cadastroQuestao">
 
-              <input type="text" name="prof" value="" class="form-control" style="width:300px;">&nbsp&nbsp
+            <form class="form-inline" name="cadastroQuestao" method="post">
+            <input type="hidden" value= <%= matricula %> name="matriculaProf">
 
-              <input type="text" id="datepicker" class="form-control" name="dataAula" placeholder="Data" style="width: 300px;">
-              <input type="text"  id="alt-date"  name="data" style="visibility: hidden "><br><br>
+ Turma: <select class="form-control" id="nometurma" name="turma" style="width:300px;">
+              <option disabled selected>Selecione uma turma</option>
+              <option id="btn-mostraturma">
+            </select>&nbsp&nbsp
 
-              <select class="form-control" name="turma" style="width:300px;">
-                <option disabled selected>Turma</option>
-              </select>&nbsp&nbsp
-
-              <select class="form-control" name="disciplina" onclick="campoPreenchido('cadastroQuestao', 'autor', 'Informe o autor da questão!')" style="width:300px;">
-                <option disabled selected>Disciplina</option>
-              </select><br><br>
-
-              <input type="text" name="obs" value="" class="form-control" style="width:610px;" placeholder="Observações sobre a aula"><br><br>
+            Disciplina: <select class="form-control" id="nomedisciplina" name="nomedisciplina" style="width:300px;">
+              <option disabled selected>Selecione uma disciplina</option>
+              <option id="btn-mostradisc">
+            </select>&nbsp&nbsp
 
 
-              <div class="" id="vemTabela" style="width:610px; text-align: center;">
-                <table class="table" style="width:610px;">
-                  <thead class="thead-inverse">
-                    <tr>
-                      <th>#</th>
-                      <th>Aluno</th>
-                      <th>Presente</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>1</th>
-                      <td>Juca de Alcântará</td>
-                      <td class="celulasCB"><input type="checkbox" name="name" value=""></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <button type="button" name="cadastrar" class="btn btn-default">Enviar</button>
-              </div>
+            <button class="btn btn-primary" type="button" id="btDiaAnterior">
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+
+            </button>
+            <input class="form-control" type="text" id="txtSelectedDate" name="txtSelectedDate" />
+            <button class="btn btn-primary" type="button" id="btDiaPosterior">
+            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+
+            </button>
 
 
 
-            </form>
+            <br><br>
+
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="button" name="consultar" id="btn-consultar"  class="btn btn-default">Consultar</button>
+
+
+
+<br>
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <table class="table" name="tabletop" id="tabletop" style="width:750px; margin-left: 50px;">
+                <thead class="thead-inverse">
+                  <tr>
+                  <th class="celulasCB"   >N° Chamada</th>
+                    <th class="celulasCB" >Matrículas</th>
+                    <th class="celulasCB" >Nomes dos Alunos</th>
+                    <th class="celulasCB" >Presença</th>
+
+
+                  </tr>
+
+                </thead>
+                <tbody id="IzaMyLuv">
+
+                </tbody>
+              </table>
+              <textarea rows="10" cols="50" id="textAreas" name="textAreas"> </textarea> 
+              <br>
+              <input type='button' id="btAreas" type="button" value="Enviar" class="btn btn-primary">
+              
+
+            </div>
+
+</form>
+
 
           </div>
+
 
           <div class="footer">
             <footer>

@@ -46,6 +46,7 @@
                 console.log(data);
                 console.log('process sucess');
                 $("#tableQuestoes").empty();
+                $("#errorMessage").empty();
 
                for(var i = 0; i < data.length; i++) {
                  $("#tableQuestoes").append($("<tr/>")
@@ -61,11 +62,53 @@
 
               error: function() {
                 console.log('process error');
+                $("#tableQuestoes").empty();
+                $("#errorMessage").empty();
+                $("#tableQuestoes").append($("<H3/>").text("Não há questões compatíveis com a consulta"));
               },
             });
 
 
 
+      });
+    });
+
+    $( function() {
+      $("#disciplina").change(function(){
+
+        var disciplina = $('#disciplina').val();
+
+        console.log(disciplina);
+
+        $.ajax({
+          url: "/pesqMat",  // AQUI É A URL QUE SERA ENVIADO
+          type: "POST",   //TIPO DE ENVIO
+          dataType: "json", //TIPO DE DADO QUE SERA PASSADO
+          data:JSON.stringify({
+            disciplina: disciplina
+          }),
+
+          contentType: "application/json",
+          cache: false,
+          timeout: 5000,
+          complete: function() {
+            console.log('process complete');
+          },
+          success: function(data) {
+            console.log(disciplina);
+            console.log('process sucess');
+            $("#materia").empty();
+            $("#materia").append($("<option disable selected />").val('Matéria').text('Matéria'));
+            for(var i = 0; i < data.length; i++) {
+              $("#materia").append($("<option />").val(data[i]).text(data[i]));
+              console.log(data[i]);
+            }
+          },
+
+          error: function() {
+            console.log('process error');
+          },
+        });
       });
     });
 
@@ -124,12 +167,12 @@ function removerQuest(element){
 
              $.post("/pesqDisc",function(data){
                 $("#disciplina").empty();
-                $("#disciplina").append($("<option disable selected />").val('Disciplina').text('Disciplina'));
+                $("#disciplina").append($("<option selected />").val('Disciplina').text('Disciplina'));
 
                for(var i = 0; i < data.length; i++) {
                 //  $('#autor select').append('<option value='+i+'>'+data[i]+'</option>');
                  $("#disciplina").append($("<option />").val(data[i]).text(data[i]));
-                
+                console.log(data[i]);
                }
              });
     });
@@ -159,11 +202,12 @@ function removerQuest(element){
                 <option disabled selected>Disciplina</option>
               </select> &nbsp&nbsp <br><br>
 
-              <input type="text" name="materia" id="materia" value="" placeholder="Matéria" class="form-control" style="width:300px;">&nbsp&nbsp
-
+              <select class="form-control" id="materia"  style="width:300px;">
+                <option disabled selected>Matéria</option>
+              </select> &nbsp&nbsp
 
               <select class="form-control" name="serie" id="serie" style="width:300px;">
-                <option disabled selected>Série</option>
+                <option selected>Série</option>
                 <option>1º ano</option>
                 <option>2º ano</option>
                 <option>3º ano</option>
@@ -172,13 +216,13 @@ function removerQuest(element){
               <input type="text" name="creation" id="creation" value="" placeholder="Ano de criação" class="form-control" style= " width:300px;"> &nbsp&nbsp
 
               <select class="form-control" name="tipo" id="tipo"  style="width:300px;">
-                <option disabled selected>Tipo</option>
+                <option selected>Tipo</option>
                 <option>Discursiva</option>
                 <option>Objetiva</option>
               </select><br><br>
 
               <select class="form-control" name="nivel" id="nivel" style="width:300px;">
-                <option disabled selected>Nível</option>
+                <option selected>Nível</option>
                 <option>Basica</option>
                 <option>Mediana</option>
                 <option>Avançada</option>
@@ -206,8 +250,9 @@ function removerQuest(element){
 
                 </tbody>
               </table>
-            </div>
 
+            </div>
+<p id="errorMessage" style="text-align:center; width: 750px; margin-left: 50px;"></p>
 
 
           </div>

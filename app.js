@@ -1,20 +1,18 @@
 /*
 	SISTEMA ESCOLAR
-	BY: YURR, LEO, NUNES
+	BY: YURR, LEO, NUNES, RENAN
 */
-var express			=	require('express');						//	'importa' o express e o instancia.
+var express				=	require('express');						//	'importa' o express e o instancia.
 var app 				=	express();
 var port 				=	process.env.PORT || 3000;				//	'Seta' qual porrta vai ser chamada
 
-var passport		= 	require('passport');
-var flash   		= 	require('connect-flash');
+var passport			= 	require('passport');
+var flash   			= 	require('connect-flash');
 
 var morgan				=	require('morgan');						//	Morgan detalha no console
-var cookieParser	=	require('cookie-parser');
-var bodyParser		=	require('body-parser');					//	Body-parser pega as infos dos forms
+var cookieParser		=	require('cookie-parser');
+var bodyParser			=	require('body-parser');					//	Body-parser pega as infos dos forms
 var	session 			=	require('express-session');
-
-
 
 /*CONFIGS*/
 
@@ -38,7 +36,6 @@ var	session 			=	require('express-session');
 			/*Engine*/
 				app.set('view engine', 'ejs');						//	configura a engine view
 				app.use('/assets', express.static(__dirname + '/public'));
-
 				require('./routes')(app, passport);					//	Referença pro routes.js
 
 	app.listen(port);											//	ABRE SERVIDOR

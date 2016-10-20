@@ -21,10 +21,11 @@ angular
     $scope.vm.events.push(angular.copy(addEvento));
 
     //delete $scope.addEvento;
+
   };
 
 
-var init = function (matricula) {
+  var init = function (matricula) {
 
 // var Indata = {'product': "tchau"};
 // $http.post("/pesquisaEvento", Indata).
@@ -34,16 +35,18 @@ var init = function (matricula) {
 //          },
 //              function (data, status, headers, config) { alert("error") });
 
-  $http.post('/pesquisaEvento').success(function(events) {    
+$http.post('/pesquisaEvento').success(function(events) {    
 
 
-    events.forEach(event => {
-  event.startsAt = new Date(event.startsAt);
-});
-     vm.events = events;
+  events.forEach(event => {
+    event.startsAt = new Date(event.startsAt);
+
+  });
+
+  vm.events = events;
 
 
- });    
+});    
 
 };
 init();
@@ -78,4 +81,3 @@ init();
           };
       
         });*/
-    

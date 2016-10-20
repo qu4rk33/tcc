@@ -16,29 +16,33 @@ module.exports = function(app,passport) {
             app.get('/cadastroQuest',isLogged, HomeController.cadastroQuest);
             app.get('/cadastroProvas',isLogged, HomeController.cadastroProvas);
             app.get('/cadastroNotas',isLogged, HomeController.cadastroNotas);
-            app.get('/diarioPresenca',isLogged, HomeController.diarioPresenca);
+            app.get('/diario',isLogged, HomeController.diarioPresenca);
             app.get('/consultaQuest',isLogged, HomeController.consultaQuest);
             app.get('/consultaProf',isLogged, HomeController.consultaProf);
             app.get('/consultaTurma',isLogged, HomeController.consultaTurma);
             app.get('/consultaAluno',isLogged, HomeController.consultaAluno);
+            app.get('/calendario', isLogged, HomeController.calendario);
+            app.get('/consultaProvas',isLogged, HomeController.consultaProvas);
 
 
 
-            app.post('/cadastro', passport.authenticate('cadastro', {
-            successRedirect : '/',
-            failureRedirect : '/cadastro',
-            failureFlash : true
-        }));
 
-            app.post('/', passport.authenticate('login', {
-            successRedirect : '/index',
-            failureRedirect : '/',
-            failureFlash : true,
-        }));
+                app.post('/cadastro', passport.authenticate('cadastro', {
+                successRedirect : '/',
+                failureRedirect : '/cadastro',
+                failureFlash : true
+            }));
+
+                app.post('/', passport.authenticate('login', {
+                successRedirect : '/index',
+                failureRedirect : '/',
+                failureFlash : true,
+            }));
 
 
             app.post('/cadastroQuest', CadController.cadastroQuest);
             app.post('/cadastroProva', CadController.cadastroProva);
+            app.post('/cadastroDiario', CadController.cadastroDiario);
             app.post('/deletarQuest', ConsultCtrl.removerQuest);
             app.post('/pesqMat', CadController.pesquisaMat);
             app.post('/pesqDisc', CadController.pesquisaDisc);
@@ -47,15 +51,17 @@ module.exports = function(app,passport) {
             app.post('/pesca', TestCTRL.pesquisaMorte2);
             app.post('/pescaconsul', ConsultCtrl.pesquisateste);
             app.post('/mostraturma', ConsultCtrl.pesquisaturma);
+            app.post('/pesqDiscProf', ConsultCtrl.pesquisaDiscProf);
             app.post('/pegaaluno', ConsultCtrl.listalunos);
-
-            /*-----------Calendario---------------------------------*/
+            app.post('/pegaaula', ConsultCtrl.pegaPresenca);
+            app.post('/consultandoProva', ConsultCtrl.consulProva);
+            
+ /*-----------Calendario---------------------------------*/
             app.post('/cadastroEvento', CadController.cadastroEvento);
            
             app.post('/pesquisaEvento', ConsultCtrl.pesquisaEvento);
             app.get('/pesquisaEvento', ConsultCtrl.pesquisaEvento);
-
-
+            
 };
 function isLogged(request, response, next) {
     if (request.isAuthenticated())
