@@ -208,20 +208,23 @@ exports.pegaPresenca   =   function(req, res){
 exports.pesquisaEvento  = function(req, res){
   var eventos = [];  
   
-  var qry = "SELECT `matricula`, `evento`, `datahora`, `cor`, `cor2` FROM `calendario` WHERE `matricula`='"+req.user.matricula+"'  ";
+  var qry = "SELECT `matricula`, `cod_evento`, `evento`, `datahora`, `cor`, `cor2` FROM `calendario` WHERE `matricula`='"+req.user.matricula+"'  ";
 
   connDB.query(qry,function(err,rows){
 
     for (var i = 0, len = rows.length; i < len; i++)
       {
         eventos.push({
-          matricula : rows[i].matricula,
-          title    : rows[i].evento, 
-          startsAt :rows[i].datahora, 
+          cod_evento : rows[i].cod_evento,
+          matricula  : rows[i].matricula,
+          title      : rows[i].evento, 
+          startsAt   : rows[i].datahora, 
           color:{
             primary   :rows[i].cor,
             secondary : rows[i].cor2 
-          }
+          } ,
+          actions: "actions"
+
         });
       }
    

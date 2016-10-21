@@ -222,10 +222,3 @@ exports.cadastroEvento   = function(request, response, next){
   console.log("\n\t Evento cadastrado \n");
 
 };
-
-
-
-
-
-
-
